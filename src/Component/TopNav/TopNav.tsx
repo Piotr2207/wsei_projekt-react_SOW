@@ -119,37 +119,4 @@ const RightImg = styled.img`
   }
 `;
 
-export const TopNav: FC = () => {
-  const [wrapperRef, dropdownOpen, toggleDropdown] = useDropdown();
-  const menuOpen = () => {
-    toggleDropdown();
-  };
-  return (
-    <Wrapper2>
-      <LeftImgL src="./media/logo.png" />
-      <Link to="/">
-        <LeftImgH src="./media/house2.png" />
-      </Link>
-      <WrapperTaI ref={wrapperRef}>
-        <TextandImg onClick={menuOpen}>
-          <TextHome>Home</TextHome>
-          <ImgArrow src="./media/arrow-down.png" />
-        </TextandImg>
-        {dropdownOpen && <ExpandedMenu />}
-      </WrapperTaI>
-      <SearchDiv>
-        <SearchInput type="text" placeholder="Search Legalcluster" />
-        <SearchImg src="./media/search.png" />
-      </SearchDiv>
-      <RightIcons>
-        <RightImg src="./media/house.png" />
-        <RightIconsAFT>
-          <RightImg src="./media/comments.png" />
-        </RightIconsAFT>
-        <RightIconsAFT>
-          <RightImg src="./media/bell.png" />
-        </RightIconsAFT>
-      </RightIcons>
-    </Wrapper2>
-  );
-};
+
