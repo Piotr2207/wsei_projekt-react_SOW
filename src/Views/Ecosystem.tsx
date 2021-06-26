@@ -20,4 +20,3 @@ const Ecosystem: FC = () => {
   );
 };
 
-export default Ecosystem;
