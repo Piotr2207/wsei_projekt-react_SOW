@@ -24,16 +24,3 @@ const boxShadow = (): Styles => {
 
 
 
-export const Wrapper = styled.div`
-
-    background: grey;
-
-    display: flex;
-
-    justify-content: center;
-
-    padding: 5px;
-
-    ${boxShadow()};
-
-`;
