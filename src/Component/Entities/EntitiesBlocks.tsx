@@ -79,4 +79,4 @@ export const EntitiesBlocks = (props: any) => {
       ))}
     </Wrapper5>
   );
-}
+};
