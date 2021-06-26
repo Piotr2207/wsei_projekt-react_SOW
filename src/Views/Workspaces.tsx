@@ -18,3 +18,4 @@ const Workspaces: FC = () => {
     </Wrapper>
   );
 };
+export default Workspaces;
