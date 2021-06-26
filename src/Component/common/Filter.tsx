@@ -184,14 +184,4 @@ export const FilterComponent: FC = () => {
           placeholder="Entity.."
           disabled
         ></InputInThirdRowSec>
-      </ThirdRow>
-      <FourthRow>
-        <AddFilterIMG src="../Media/add.svg"></AddFilterIMG>
-        <AddFilterContent>Add Filter</AddFilterContent>
-        <NinthSelectedList>
-          <option>choose property</option>
-        </NinthSelectedList>
-      </FourthRow>
-    </WrapperFilter>
-  );
-};
+  
