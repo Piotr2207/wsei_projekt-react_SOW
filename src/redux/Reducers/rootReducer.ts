@@ -12,11 +12,4 @@ export default combineReducers({
   comments,
 });
 
-export interface IState {
-  users: IUserReducer;
-  user: IUserReducer;
-  photo: IPhotoReducer;
-  post: IPostReducer;
-  comments: ICommentReducer;
-  comment: ICommentReducer;
-}
+
