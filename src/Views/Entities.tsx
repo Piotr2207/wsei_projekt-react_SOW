@@ -23,4 +23,3 @@ const Entities: FC = () => {
     </Wrapper>
   );
 };
-export default Entities;
