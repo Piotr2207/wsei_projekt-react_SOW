@@ -1,8 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import { fetchComments } from "../redux/Actions/commentActions";
 import { fetchPhoto } from "../redux/Actions/photoActions";
 import { fetchUsers } from "../redux/Actions/userActions";
@@ -32,6 +29,16 @@ const Title = styled.span`
   font-weight: bold;
   font-size: 25px;
 `;
+const StartWorkingBlocksTitle = styled.p`
+  font-weight: bold;
+  font-size: 14px;
+`;
+const StartWorkingBlocksContent = styled.p``;
+const LastUpdates = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 const TitleIMG = styled.img``;
 const TitleContent = styled.p``;
 const StartWorking = styled.div``;
@@ -49,16 +56,7 @@ const StartWorkingBlocks = styled.div`
   border: 1px solid;
   background-color: white;
 `;
-const StartWorkingBlocksTitle = styled.p`
-  font-weight: bold;
-  font-size: 14px;
-`;
-const StartWorkingBlocksContent = styled.p``;
-const LastUpdates = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
+
 const LastUpdatesTitle = styled.span`
   font-weight: bold;
   font-size: 25px;
