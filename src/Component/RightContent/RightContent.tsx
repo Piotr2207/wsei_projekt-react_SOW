@@ -328,4 +328,15 @@ export const RightContent: FC = () => {
               </ProfilePosts>
             </RightPosts>
           ))}
-      
+      </ResumeYourWork>
+      <PagginationButtons className={classes.root}>
+        <Pagination
+          count={40}
+          color="primary"
+          page={activePage}
+          onChange={handleChangePage}
+        />
+      </PagginationButtons>
+    </Wrapper4>
+  );
+};
