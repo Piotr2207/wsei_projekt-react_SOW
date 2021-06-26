@@ -43,3 +43,10 @@ export interface IFakeCompany {
   userID: number;
 }
 
+export interface IComment {
+  id: number;
+  postId: number;
+  name: string;
+  email: string;
+  body: string;
+}
