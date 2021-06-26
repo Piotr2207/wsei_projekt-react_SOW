@@ -1,208 +1,149 @@
-import React, { FC, useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { IState } from "../../redux/Reducers/rootReducer";
-import { IUserReducer } from "../../redux/Reducers/userReducer";
-import { fetchUser, fetchUsers } from "../../redux/Actions/userActions";
-import { fetchPhoto } from "../../redux/Actions/photoActions";
-import { IPhoto } from "../../StyleHelpers/ApiInterfaces";
-import { IPhotoReducer } from "../../redux/Reducers/photoReducer";
-import { loggUserID } from "../../StyleHelpers/CurrentLogUser";
+import Ic from "../icons/I";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { IUsersReducer } from "../../reducers/usersReducers";
+import { IState } from "../../reducers";
+import { IPhotoReducer } from "../../reducers/photosReducers";
+import { useSelector } from "react-redux";
 
-const Wrapper3 = styled.div`
+const EmptyBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const LeftMain = styled.div`
+  width: 400px;
   height: auto;
-  width: 20%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-  background-color: #edf2f7;
-  position: absolute;
-  z-index: 2;
+  background-color: rgb(245, 247, 249);
+  a {
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
+      color: black;
+      text-decoration: none;
+    }
+  }
 `;
-const Profile = styled.div`
-  height: 100%;
-  width: 75%;
+const LeftMainPhotoBox = styled.div`
+  width: 300px;
+  height: 310px;
+  background-color: #fff;
+  margin: auto;
+  box-shadow: 0 0 10px 0px #dfdfdf;
+  border-radius: 5px;
+`;
+const LeftMainPhotoBoxTop = styled.div`
+  border-bottom: 3px solid #f5f7f9;
+  padding-bottom: 20px;
+  span {
+    font-weight: bold;
+  }
+`;
+const LeftMainPhotoBoxAvatar = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid lightgrey;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px 0px #dfdfdf;
+  border-radius: 100px;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+  }
+`;
+const LeftMainPhotoBoxBottom = styled.div``;
+const LeftMainPhotoBoxBottomList = styled.ul``;
+const LeftMainPhotoBoxBottomContent = styled.li`
+  list-style-type: none;
+  padding-bottom: 10px;
+  text-align: left;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background-color: white;
-  position: absolute;
-  top: 5%;
-  left: 23px;
-  box-shadow: 0px 2px 7px;
-  flex-direction: column;
-  border-radius: 4px;
+  width: 90%;
 `;
-const PersonAvatar = styled.img`
-  width: 63px;
-  height: 63px;
-  border-radius: 50%;
-  position: relative;
-  top: 10px;
-`;
-const PersonName = styled.p`
-  color: blue;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 17px;
-  text-align: center;
-  position: relative;
-  bottom: 10px;
-`;
-const PersonHeader = styled.p`
-  font-size: 14px;
-  position: relative;
-  bottom: 15px;
-`;
-const NetAndPub = styled.div`
-  height: 100%;
-  width: 75%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white;
-  position: absolute;
-  top: 105.7%;
-  left: 23px;
-  box-shadow: 0px 2px 7px;
-  white-space: nowrap;
-  border-radius: 4px;
-`;
-const Network = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  position: relative;
-  left: 15%;
-  bottom: 23%;
-  font-size: 17px;
-  font-weight: bold;
-`;
-const LeftNetworkImg = styled.img`
-  height: 25px;
-  position: relative;
-  right: 9.5px;
-`;
-const RightNetworkImg = styled.img`
-  height: 20px;
-  width: 25px;
-  position: relative;
-  left: 40px;
-  border: 1px solid;
-  border-radius: 3px;
-`;
-const Publications = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  right: 50%;
-  font-size: 17px;
-  top: 20%;
-  font-weight: bold;
-`;
-const LeftPublicationskImg = styled.img`
-  height: 24px;
-  width: 24px;
-  position: relative;
-  right: 8px;
-`;
-const RightPublicationsImg = styled.img`
-  height: 20px;
-  width: 25px;
-  position: relative;
-  left: 14px;
-  border: 1px solid;
-  border-radius: 3px;
-`;
-const Menu = styled.div`
-  height: auto;
-  display: flex;
-  position: relative;
-  top: 320px;
-  left: -6%;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-`;
-const ImgLeftMenu = styled.img`
-  height: 25px;
-  width: 25px;
-  position: relative;
-  right: 50px;
-  top: 20px;
-`;
-const TextLeftMenu = styled.p`
-  font-size: 20px;
-  font-weight: bold;
-  position: relative;
-  width: 100%;
+const ListBelowPhotoBox = styled.ul``;
+const ListBelowPhotoBoxContent = styled.li`
+  list-style-type: none;
+  padding: 10px;
+  text-align: left;
 `;
 
-const StyledLink = styled(Link)`
-  color: black;
-  font-size: 30px;
-  text-decoration: none;
-`;
-type fetchUser = ReturnType<typeof fetchUser>;
-type fetchPhoto = ReturnType<typeof fetchPhoto>;
-
-export const LeftMenu: FC = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch<fetchPhoto>(fetchPhoto());
-  }, []);
-  useEffect(() => {
-    dispatch<fetchUser>(fetchUser(loggUserID.toString()));
-  }, []);
-  const users = useSelector<IState, IUserReducer>((state) => ({
+function LeftMenu() {
+  const { usersList } = useSelector<IState, IUsersReducer>((state) => ({
     ...state.users,
   }));
-  const photos = useSelector<IState, IPhotoReducer>((state) => ({
-    ...state.photo,
+  const { photoList } = useSelector<IState, IPhotoReducer>((state) => ({
+    ...state.photos,
   }));
-  const photoCurrentLogg = photos.photo[loggUserID - 1];
 
   return (
-    <Wrapper3>
-      <Profile>
-        <StyledLink to="/profile">
-          <PersonAvatar src={photoCurrentLogg?.url}></PersonAvatar>
-        </StyledLink>
-        <PersonName>{users.user?.name}</PersonName>
-        <PersonHeader>Job title - Company</PersonHeader>
-      </Profile>
-      <NetAndPub>
-        <Network>
-          <LeftNetworkImg src="./media/network.png" />
-          Your Network
-          <RightNetworkImg src="./media/user-plus.png" />
-        </Network>
-        <Publications>
-          <LeftPublicationskImg src="./media/publications.png" />
-          Your Publications
-          <RightPublicationsImg src="./media/plus.png" />
-        </Publications>
-      </NetAndPub>
-
-      {/* Linki - statyczne menu*/}
-      <Menu>
-        <StyledLink to="/publications">
-          <ImgLeftMenu src="./media/publications.png" />
-          <TextLeftMenu>Publications</TextLeftMenu>
-        </StyledLink>
-        <StyledLink to="/ecosystem">
-          <ImgLeftMenu src="./media/ecosystem.png" />
-          <TextLeftMenu>Ecosystem</TextLeftMenu>
-        </StyledLink>
-        <StyledLink to="/entities">
-          <ImgLeftMenu src="./media/entities.png" />
-          <TextLeftMenu>Entities</TextLeftMenu>
-        </StyledLink>
-      </Menu>
-    </Wrapper3>
+    <LeftMain>
+      <LeftMainPhotoBox>
+        <br />
+        <LeftMainPhotoBoxTop>
+          <Link to="/user">
+            <LeftMainPhotoBoxAvatar>
+              <img src={photoList[0]?.url} />
+            </LeftMainPhotoBoxAvatar>
+            <span>{usersList[0]?.name}</span>
+          </Link>
+          <br />
+          {usersList[0]?.company.name}
+        </LeftMainPhotoBoxTop>
+        <LeftMainPhotoBoxBottom>
+          <LeftMainPhotoBoxBottomList>
+            <LeftMainPhotoBoxBottomContent>
+              <Link to="/404">
+                <EmptyBox>
+                  <Ic iconName="network.png" />
+                  Your network
+                </EmptyBox>
+              </Link>
+              <Ic iconName="user-plus.svg" border={true} />
+            </LeftMainPhotoBoxBottomContent>
+            <LeftMainPhotoBoxBottomContent>
+              <Link to="/404">
+                <EmptyBox>
+                  <Ic iconName="publications.svg" />
+                  Your Publications
+                </EmptyBox>
+              </Link>
+              <Ic iconName="plus.svg" border={true} />
+            </LeftMainPhotoBoxBottomContent>
+          </LeftMainPhotoBoxBottomList>
+        </LeftMainPhotoBoxBottom>
+      </LeftMainPhotoBox>
+      <ListBelowPhotoBox>
+        <ListBelowPhotoBoxContent>
+          <Link to="/404">
+            <EmptyBox>
+              <Ic iconName="publications.svg" />
+              Publications
+            </EmptyBox>
+          </Link>
+        </ListBelowPhotoBoxContent>
+        <ListBelowPhotoBoxContent>
+          <Link to="/404">
+            <EmptyBox>
+              <Ic iconName="ecosystem.svg" />
+              Ecosystem
+            </EmptyBox>
+          </Link>
+        </ListBelowPhotoBoxContent>
+        <ListBelowPhotoBoxContent>
+          <Link to="/entities">
+            <EmptyBox>
+              <Ic iconName="entities.svg" />
+              Entities
+            </EmptyBox>
+          </Link>
+        </ListBelowPhotoBoxContent>
+      </ListBelowPhotoBox>
+    </LeftMain>
   );
-};
+}
+
