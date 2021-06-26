@@ -1,15 +1,15 @@
-import { Dispatch } from "redux";
-import * as actionTypes from "../Types/photoTypes";
-import { IPhoto } from "../../StyleHelpers/ApiInterfaces";
+import { Dispatch } from 'redux';
+import * as actionsTypes from '../actions/actionTypes/photoTypes';
+import { ISinglePhoto } from '../entities/ISinglePhoto';
 
-export const fetchPhoto = (): Promise<IPhoto[]> =>
-  ((dispatch: Dispatch) => {
-    return fetch(`https://jsonplaceholder.typicode.com/photos`)
-      .then((response) => response.json())
-      .then((photo: IPhoto[]) => {
-        dispatch({
-          type: actionTypes.FETCH_PHOTO,
-          photo,
-        });
-      });
-  }) as any;
+export const getPhotos = () : Promise<ISinglePhoto[]> => ((dispatch:Dispatch) =>{
+
+        return fetch('https://jsonplaceholder.typicode.com/photos')
+        .then(response => response.json())
+        .then((photoList : ISinglePhoto[]) => {
+            dispatch({
+                type:actionsTypes.GET_PHOTO,
+                photoList
+            })
+        })
+}) as any;
