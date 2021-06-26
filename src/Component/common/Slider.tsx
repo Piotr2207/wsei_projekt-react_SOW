@@ -88,4 +88,4 @@ export class MultipleItems extends Component {
       </WorkspaceDiv>
     );
   }
-
+}
