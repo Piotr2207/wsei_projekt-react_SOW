@@ -24,4 +24,4 @@ export const fetchComment = (id: string): Promise<IComment> =>
           comment,
         });
       });
-  }) 
+  }) as any;
