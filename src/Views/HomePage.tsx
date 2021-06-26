@@ -20,4 +20,4 @@ const HomePage: FC = () => {
     </Wrapper>
   );
 };
-export default HomePage;
+
