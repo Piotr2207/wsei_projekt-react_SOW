@@ -21,3 +21,4 @@ const Test: FC = () => {
   );
   };
 
+export default Test;
