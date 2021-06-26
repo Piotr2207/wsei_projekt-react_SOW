@@ -19,4 +19,5 @@ const Ecosystem: FC = () => {
     </Wrapper>
   );
 };
+export default Ecosystem;
 
