@@ -1,26 +1,25 @@
-import { IPhoto } from "../../StyleHelpers/ApiInterfaces";
-import * as actionTypes from "../Types/photoTypes";
+import { ISinglePhoto} from '../entities/ISinglePhoto';
+import * as actionTypes from '../actions/actionTypes/photoTypes';
 
 export interface IPhotoReducer {
-  photo: IPhoto[];
+    photoList: ISinglePhoto[];
 }
 
-const defaultState = (): IPhotoReducer => ({
-  photo: [],
+const defaultState = () : IPhotoReducer => ({
+    photoList: [],
 });
-export default (state = defaultState(), action: any) => {
-  switch (action.type) {
-    case actionTypes.FETCH_PHOTO: {
-      const data: actionTypes.IPhotoTypes["FETCH_PHOTO"] = action;
-      return {
-        ...state,
-        photo: data.photo,
-      };
+
+export default (state = defaultState(), action : any)=>{
+    switch(action.type){
+        case actionTypes.GET_PHOTO:{
+            const photoData:actionTypes.IPhotoTypes['GET_PHOTO'] = action;
+            return{
+                ...state,
+                photoList:photoData.photoList
+            }
+        }
+        default:{
+            return  state;
+        }
     }
-    default: {
-      return {
-        ...state,
-      };
-    }
-  }
-};
+}
