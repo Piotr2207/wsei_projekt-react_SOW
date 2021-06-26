@@ -20,4 +20,3 @@ const Publications: FC = () => {
 );
 };
 
-export default Publications;
