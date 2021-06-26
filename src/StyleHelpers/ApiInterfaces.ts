@@ -42,10 +42,4 @@ export interface IFakeCompany {
   photo_url: string;
   userID: number;
 }
-export interface IComment {
-  id: number;
-  postId: number;
-  name: string;
-  email: string;
-  body: string;
-}
+
