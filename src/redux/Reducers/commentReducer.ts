@@ -1,31 +1,17 @@
-import { IComment } from "../../StyleHelpers/ApiInterfaces";
-import * as actionTypes from "../Types/commentTypes";
+import { combineReducers } from 'redux';
 
-export interface ICommentReducer {
-  comments: IComment[];
+import users, {IUsersReducer} from './usersReducers';
+import posts, {IPostReducer} from './postsReducers';
+import photos, {IPhotoReducer} from './photosReducers';
+
+export interface IState {
+    users: IUsersReducer;
+    posts: IPostReducer;
+    photos: IPhotoReducer;
 }
 
-const defaultState = (): ICommentReducer => ({
-  comments: [],
-});
-
-export default (state = defaultState(), action: any) => {
-  switch (action.type) {
-    case actionTypes.FETCH_COMMENTS: {
-      const data: actionTypes.ICommentTypes["FETCH_COMMENTS"] = action;
-      return {
-        ...state,
-        comments: data.comments,
-      };
-    }
-    case actionTypes.FETCH_COMMENT: {
-      const data: actionTypes.ICommentTypes["FETCH_COMMENT"] = action;
-      return {
-        ...state,
-        comment: data.comment,
-      };
-    }
-    default:
-      return state;
-  }
-};
+export default combineReducers({
+    users,
+    posts,
+    photos,
+})
