@@ -1,26 +1,25 @@
-import { ILatestPublicationPost } from "../../StyleHelpers/ApiInterfaces";
-import * as actionTypes from "../Types/postTypes";
+import { ISinglePost } from '../entities/ISinglePost';
+import * as actionTypes from '../actions/actionTypes/postTypes';
 
 export interface IPostReducer {
-  post: ILatestPublicationPost[];
+    postList: ISinglePost[];
 }
 
-const defaultState = (): IPostReducer => ({
-  post: [],
+const defaultState = () : IPostReducer => ({
+    postList: [],
 });
-export default (state = defaultState(), action: any) => {
-  switch (action.type) {
-    case actionTypes.FETCH_POST: {
-      const data: actionTypes.IPostType["FETCH_POST"] = action;
-      return {
-        ...state,
-        post: data.post,
-      };
+
+export default (state = defaultState(), action : any)=>{
+    switch(action.type){
+        case actionTypes.GET_POST:{
+            const postData:actionTypes.IPostTypes['GET_POST'] = action;
+            return{
+                ...state,
+                postList:postData.postList
+            }
+        }
+        default:{
+            return  state;
+        }
     }
-    default: {
-      return {
-        ...state,
-      };
-    }
-  }
-};
+}
