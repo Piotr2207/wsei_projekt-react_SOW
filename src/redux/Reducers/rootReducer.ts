@@ -13,3 +13,11 @@ export default combineReducers({
 });
 
 
+export interface IState {
+  users: IUserReducer;
+  user: IUserReducer;
+  photo: IPhotoReducer;
+  post: IPostReducer;
+  comments: ICommentReducer;
+  comment: ICommentReducer;
+}
